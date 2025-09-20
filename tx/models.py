@@ -29,4 +29,4 @@ class Transaction(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.direction.title()} {self.amount} to {self.account.name}"
+        return f"{self.direction} {self.amount} to {self.account.name}"
