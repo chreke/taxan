@@ -21,6 +21,7 @@ class Event(models.Model):
     date = models.DateField()
     description = models.CharField(max_length=100)
     financial_year = models.ForeignKey(FinancialYear, on_delete=models.CASCADE, null=True, blank=True, related_name='events')
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.date} - {self.description}"
