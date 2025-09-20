@@ -17,9 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from tx.views import EventViewSet, FinancialYearViewSet
 
 # Create a router instance
 router = DefaultRouter()
+router.register(r'events', EventViewSet)
+router.register(r'financial-years', FinancialYearViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
