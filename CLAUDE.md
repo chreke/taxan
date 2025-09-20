@@ -1,11 +1,29 @@
 # CLAUDE.md
 
+## About
+
+"Taxan" is an accounting service for Swedish small businesses. The service
+supports bookkeeping and accounting.
+
 ## Tech stack
 
+- Python 3
 - Django 5
 - SQLite
+- virtualenv
+
+## Project structure
+
+The main app is in the `tx` directory
+
+## Development workflow
+
+Please commit your changes when you are done.
 
 ## Development Setup
+
+Note that this app uses a virtual environment located in `venv`; please make
+sure it is sourced it before attempting to run any Python or Django commands.
 
 ```bash
 # Create and activate virtual environment
