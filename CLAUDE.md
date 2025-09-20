@@ -1,5 +1,8 @@
 # CLAUDE.md
 
+Please run the following command when you have completed a task:
+`afplay /System/Library/Sounds/Glass.aiff`
+
 ## About
 
 "Taxan" is an accounting service for Swedish small businesses. The service
@@ -16,8 +19,8 @@ supports bookkeeping and accounting.
 ## Project structure
 
 ```
-├── manage.py                    # Django management script
-├── requirements.txt             # Python dependencies
+├── manage.py                   # Django management script
+├── requirements.txt            # Python dependencies
 ├── docs/MODELS.md              # Database models documentation
 ├── taxan/                      # Django project configuration
 └── tx/                         # Main accounting app
