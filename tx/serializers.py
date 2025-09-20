@@ -33,14 +33,14 @@ class NestedTransactionSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
-    transactions = NestedTransactionSerializer(many=True, source='transaction_set')
+    transactions = NestedTransactionSerializer(many=True)
 
     class Meta:
         model = Event
         fields = ['id', 'date', 'description', 'financial_year', 'transactions']
 
     def validate(self, data):
-        transactions_data = data.get('transaction_set', [])
+        transactions_data = data.get('transactions', [])
 
         if not transactions_data:
             raise serializers.ValidationError(
@@ -67,7 +67,7 @@ class EventSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        transactions_data = validated_data.pop('transaction_set')
+        transactions_data = validated_data.pop('transactions')
         event = Event.objects.create(**validated_data)
 
         for transaction_data in transactions_data:

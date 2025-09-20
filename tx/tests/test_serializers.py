@@ -158,10 +158,10 @@ class EventSerializerTest(TestCase):
         event = serializer.save()
 
         self.assertEqual(event.description, 'Sale transaction')
-        self.assertEqual(event.transaction_set.count(), 2)
+        self.assertEqual(event.transactions.count(), 2)
 
-        debit_transaction = event.transaction_set.get(direction='debit')
-        credit_transaction = event.transaction_set.get(direction='credit')
+        debit_transaction = event.transactions.get(direction='debit')
+        credit_transaction = event.transactions.get(direction='credit')
 
         self.assertEqual(debit_transaction.amount, Decimal('100.00'))
         self.assertEqual(credit_transaction.amount, Decimal('100.00'))
@@ -215,7 +215,7 @@ class EventSerializerTest(TestCase):
         serializer = EventSerializer(data=data)
         self.assertTrue(serializer.is_valid())
         event = serializer.save()
-        self.assertEqual(event.transaction_set.count(), 3)
+        self.assertEqual(event.transactions.count(), 3)
 
     def test_serialization(self):
         event = Event.objects.create(

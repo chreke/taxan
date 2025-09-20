@@ -20,7 +20,7 @@ class Account(models.Model):
 class Event(models.Model):
     date = models.DateField()
     description = models.CharField(max_length=100)
-    financial_year = models.ForeignKey(FinancialYear, on_delete=models.CASCADE, null=True, blank=True)
+    financial_year = models.ForeignKey(FinancialYear, on_delete=models.CASCADE, null=True, blank=True, related_name='events')
 
     def __str__(self):
         return f"{self.date} - {self.description}"
@@ -33,9 +33,9 @@ class Transaction(models.Model):
     ]
 
     amount = models.DecimalField(max_digits=12, decimal_places=2)
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='transactions')
     direction = models.CharField(max_length=6, choices=DIRECTION_CHOICES)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='transactions')
 
     def __str__(self):
         return f"{self.direction} {self.amount} to {self.account.name}"

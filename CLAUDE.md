@@ -73,3 +73,18 @@ python manage.py createsuperuser
 # Run tests
 python manage.py test
 ```
+
+## Style Guide
+
+### Model Foreign Keys
+
+When defining foreign keys in Django models, always specify a `related_name` attribute. The `related_name` should be the plural form of the model name to maintain consistency and clarity in reverse lookups.
+
+**Example:**
+```python
+class Transaction(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='transactions')
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='transactions')
+```
+
+This allows for intuitive reverse queries like `event.transactions.all()` and `account.transactions.all()`.
