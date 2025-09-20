@@ -9,12 +9,24 @@ supports bookkeeping and accounting.
 
 - Python 3
 - Django 5
+- Django REST Framework
 - SQLite
 - virtualenv
 
 ## Project structure
 
-The main app is in the `tx` directory
+```
+├── manage.py                    # Django management script
+├── requirements.txt             # Python dependencies
+├── docs/MODELS.md              # Database models documentation
+├── taxan/                      # Django project configuration
+└── tx/                         # Main accounting app
+    ├── models.py               # Database models
+    ├── serializers.py          # API serializers
+    ├── views.py                # View functions
+    ├── admin.py                # Django admin configuration
+    └── tests.py                # Test cases
+```
 
 ## Development workflow
 
