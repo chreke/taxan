@@ -1,6 +1,14 @@
 from django.db import models
 
 
+class FinancialYear(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+    def __str__(self):
+        return f"{self.start_date} - {self.end_date}"
+
+
 class Account(models.Model):
     name = models.CharField(max_length=255, blank=False)
     code = models.IntegerField()
@@ -12,6 +20,7 @@ class Account(models.Model):
 class Event(models.Model):
     date = models.DateField()
     description = models.CharField(max_length=100)
+    financial_year = models.ForeignKey(FinancialYear, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f"{self.date} - {self.description}"
