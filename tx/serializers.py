@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from decimal import Decimal
+from django.db import transaction
 from .models import FinancialYear, Account, Event, Transaction
 
 
@@ -69,10 +70,12 @@ class EventSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         transactions_data = validated_data.pop('transactions')
-        event = Event.objects.create(**validated_data)
 
-        for transaction_data in transactions_data:
-            Transaction.objects.create(event=event, **transaction_data)
+        with transaction.atomic():
+            event = Event.objects.create(**validated_data)
+
+            for transaction_data in transactions_data:
+                Transaction.objects.create(event=event, **transaction_data)
 
         return event
 
