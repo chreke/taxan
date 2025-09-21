@@ -49,7 +49,3 @@ The `Transaction` model represents individual debit or credit transactions withi
 - Each `Event` can optionally belong to one `FinancialYear`
 - Each `FinancialYear` can have multiple `Event` entries
 - Each `Account` can be referenced by multiple `Transaction` entries
-
-## Double-Entry Bookkeeping
-
-The system follows double-entry bookkeeping principles where every `Event` should have balanced debits and credits (total debits = total credits).
