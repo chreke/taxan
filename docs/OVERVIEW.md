@@ -8,6 +8,7 @@
 - **Backend**: Python 3 with Django 5.2.6
 - **API Framework**: Django REST Framework 3.16.1
 - **Database**: SQLite (development)
+- **Testing**: pytest with pytest-django
 - **Environment**: virtualenv for dependency isolation
 
 ## Core Components
@@ -86,6 +87,8 @@ Tests verify:
 - Immutability of financial records
 - File upload functionality with UUID-based naming
 - Proper error handling and business rule enforcement
+
+**Test Execution**: Run tests using `pytest` command (configured via pyproject.toml)
 
 ### 5. Configuration (`taxan/settings.py`)
 
