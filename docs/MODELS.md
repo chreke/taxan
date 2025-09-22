@@ -42,10 +42,22 @@ The `Transaction` model represents individual debit or credit transactions withi
 - `direction` Either "debit" or "credit"
 - `event` Reference to the bookkeeping event this transaction belongs to
 
+## Attachment
+
+The `Attachment` model represents file attachments associated with bookkeeping events.
+
+### Fields
+
+- `file` A file upload field that stores the uploaded file with a UUID-based filename
+- `event` Reference to the event this attachment belongs to
+- `created_at` Timestamp when the attachment was uploaded (auto-populated)
+
 ## Model Relationships
 
 - Each `Transaction` belongs to one `Account` and one `Event`
 - Each `Event` can have multiple `Transaction` entries
 - Each `Event` can optionally belong to one `FinancialYear`
+- Each `Event` can have multiple `Attachment` entries
 - Each `FinancialYear` can have multiple `Event` entries
 - Each `Account` can be referenced by multiple `Transaction` entries
+- Each `Attachment` belongs to one `Event`

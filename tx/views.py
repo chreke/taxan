@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import Event, FinancialYear
-from .serializers import EventSerializer, FinancialYearSerializer
+from .models import Event, FinancialYear, Attachment
+from .serializers import EventSerializer, FinancialYearSerializer, AttachmentSerializer
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -11,3 +11,8 @@ class EventViewSet(viewsets.ModelViewSet):
 class FinancialYearViewSet(viewsets.ModelViewSet):
     queryset = FinancialYear.objects.all()
     serializer_class = FinancialYearSerializer
+
+
+class AttachmentViewSet(viewsets.ModelViewSet):
+    queryset = Attachment.objects.all()
+    serializer_class = AttachmentSerializer

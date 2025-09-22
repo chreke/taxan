@@ -36,18 +36,25 @@ The application implements four main models following double-entry bookkeeping p
 - Fields: `amount` (decimal), `account` (FK), `direction` (debit/credit), `event` (FK)
 - Enforces double-entry principle through validation
 
+**Attachment**
+- File attachments for events (receipts, invoices, etc.)
+- Fields: `file` (FileField with UUID naming), `event` (FK), `created_at` (auto-timestamp)
+- Files uploaded to 'attachments' subdirectory with UUID-based filenames
+
 ### 2. API Layer (`tx/views.py`, `tx/serializers.py`)
 
 **ViewSets**:
 - `EventViewSet`: Full CRUD for accounting events
 - `FinancialYearViewSet`: Financial year management
-- Both use `ModelViewSet` for standard REST operations
+- `AttachmentViewSet`: File upload and management for event attachments
+- All use `ModelViewSet` for standard REST operations
 
 **Serializers** implement strict business logic:
-- `EventSerializer`: Creates events with nested transactions, validates balanced entries
+- `EventSerializer`: Creates events with nested transactions, validates balanced entries, includes read-only attachments
 - `FinancialYearSerializer`: Validates date ranges
 - `TransactionSerializer`: Individual transaction handling
 - `NestedTransactionSerializer`: Used within event creation
+- `AttachmentSerializer`: File upload handling with event association
 
 **Key Business Rules**:
 - Events must have at least one transaction
@@ -60,14 +67,17 @@ The application implements four main models following double-entry bookkeeping p
 RESTful API endpoints:
 - `/events/` - Event CRUD operations
 - `/financial-years/` - Financial year management
+- `/attachments/` - File upload and attachment management
 - `/admin/` - Django admin interface
 - `/api-auth/` - DRF authentication
+- `/media/` - Uploaded file serving (development only)
 
 ### 4. Testing (`tx/tests/`)
 
 Comprehensive test coverage:
 - **Serializer Tests**: Validation logic, data transformation, business rules
 - **ViewSet Tests**: API endpoint functionality, HTTP responses
+- **Attachment Tests**: File upload functionality, UUID generation, event association
 - **Model Tests**: Implicit through serializer testing
 
 Tests verify:
@@ -83,6 +93,7 @@ Standard Django configuration with:
 - Django REST Framework integration
 - Single app (`tx`) registration
 - Development-friendly settings (DEBUG=True)
+- Media file handling (MEDIA_ROOT, MEDIA_URL) for attachments
 
 ## Data Flow
 

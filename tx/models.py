@@ -1,3 +1,5 @@
+import uuid
+import os
 from django.db import models
 
 
@@ -40,3 +42,18 @@ class Transaction(models.Model):
 
     def __str__(self):
         return f"{self.direction} {self.amount} to {self.account.name}"
+
+
+def attachment_upload_to(instance, filename):
+    ext = os.path.splitext(filename)[1]
+    filename = f"{uuid.uuid4()}{ext}"
+    return os.path.join('attachments', filename)
+
+
+class Attachment(models.Model):
+    file = models.FileField(upload_to=attachment_upload_to)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='attachments')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Attachment for {self.event.description}"

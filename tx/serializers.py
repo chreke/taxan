@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from decimal import Decimal
 from django.db import transaction
-from .models import FinancialYear, Account, Event, Transaction
+from .models import FinancialYear, Account, Event, Transaction, Attachment
 
 
 class FinancialYearSerializer(serializers.ModelSerializer):
@@ -35,10 +35,11 @@ class NestedTransactionSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
     transactions = NestedTransactionSerializer(many=True)
+    attachments = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Event
-        fields = ['id', 'date', 'description', 'financial_year', 'transactions', 'created_at']
+        fields = ['id', 'date', 'description', 'financial_year', 'transactions', 'attachments', 'created_at']
         read_only_fields = ['created_at']
 
     def validate(self, data):
@@ -81,3 +82,10 @@ class EventSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         raise AttributeError("Event updates are not supported")
+
+
+class AttachmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attachment
+        fields = ['id', 'file', 'event', 'created_at']
+        read_only_fields = ['created_at']
