@@ -5,9 +5,11 @@ from .models import FinancialYear, Account, Event, Transaction, Attachment
 
 
 class FinancialYearSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='financialyear-detail')
+
     class Meta:
         model = FinancialYear
-        fields = ['id', 'start_date', 'end_date']
+        fields = ['url', 'id', 'start_date', 'end_date']
 
     def validate(self, data):
         if data['start_date'] >= data['end_date']:
@@ -34,12 +36,13 @@ class NestedTransactionSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='event-detail')
     transactions = NestedTransactionSerializer(many=True)
     attachments = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Event
-        fields = ['id', 'date', 'description', 'financial_year', 'transactions', 'attachments', 'created_at']
+        fields = ['url', 'id', 'date', 'description', 'financial_year', 'transactions', 'attachments', 'created_at']
         read_only_fields = ['created_at']
 
     def validate(self, data):
@@ -85,7 +88,9 @@ class EventSerializer(serializers.ModelSerializer):
 
 
 class AttachmentSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='attachment-detail')
+
     class Meta:
         model = Attachment
-        fields = ['id', 'file', 'event', 'created_at']
+        fields = ['url', 'id', 'file', 'event', 'created_at']
         read_only_fields = ['created_at']

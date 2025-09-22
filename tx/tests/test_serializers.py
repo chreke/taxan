@@ -1,5 +1,5 @@
 from django.test import TestCase
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIRequestFactory
 from decimal import Decimal
 from datetime import date
 from tx.models import FinancialYear, Account, Event, Transaction
@@ -13,6 +13,8 @@ from tx.serializers import (
 
 class FinancialYearSerializerTest(TestCase):
     def setUp(self):
+        self.factory = APIRequestFactory()
+        self.request = self.factory.get('/')
         self.valid_data = {
             'start_date': '2023-01-01',
             'end_date': '2023-12-31'
@@ -48,17 +50,19 @@ class FinancialYearSerializerTest(TestCase):
             start_date=date(2023, 1, 1),
             end_date=date(2023, 12, 31)
         )
-        serializer = FinancialYearSerializer(financial_year)
-        expected_data = {
-            'id': financial_year.id,
-            'start_date': '2023-01-01',
-            'end_date': '2023-12-31'
-        }
-        self.assertEqual(serializer.data, expected_data)
+        serializer = FinancialYearSerializer(financial_year, context={'request': self.request})
+        data = serializer.data
+
+        self.assertEqual(data['id'], financial_year.id)
+        self.assertEqual(data['start_date'], '2023-01-01')
+        self.assertEqual(data['end_date'], '2023-12-31')
+        self.assertIn('url', data)
 
 
 class TransactionSerializerTest(TestCase):
     def setUp(self):
+        self.factory = APIRequestFactory()
+        self.request = self.factory.get('/')
         self.account = Account.objects.create(name="Cash", code=1930)
         self.financial_year = FinancialYear.objects.create(
             start_date=date(2023, 1, 1),
@@ -104,14 +108,13 @@ class TransactionSerializerTest(TestCase):
             event=self.event
         )
         serializer = TransactionSerializer(transaction)
-        expected_data = {
-            'id': transaction.id,
-            'amount': '100.50',
-            'account': self.account.id,
-            'direction': 'credit',
-            'event': self.event.id
-        }
-        self.assertEqual(serializer.data, expected_data)
+        data = serializer.data
+
+        self.assertEqual(data['id'], transaction.id)
+        self.assertEqual(data['amount'], '100.50')
+        self.assertEqual(data['account'], self.account.id)
+        self.assertEqual(data['direction'], 'credit')
+        self.assertEqual(data['event'], self.event.id)
 
     def test_update_not_supported(self):
         transaction = Transaction.objects.create(
@@ -128,6 +131,8 @@ class TransactionSerializerTest(TestCase):
 
 class EventSerializerTest(TestCase):
     def setUp(self):
+        self.factory = APIRequestFactory()
+        self.request = self.factory.get('/')
         self.cash_account = Account.objects.create(name="Cash", code=1930)
         self.revenue_account = Account.objects.create(name="Revenue", code=3000)
         self.financial_year = FinancialYear.objects.create(
@@ -236,12 +241,13 @@ class EventSerializerTest(TestCase):
             event=event
         )
 
-        serializer = EventSerializer(event)
+        serializer = EventSerializer(event, context={'request': self.request})
         data = serializer.data
 
         self.assertEqual(data['description'], 'Test event')
         self.assertEqual(len(data['transactions']), 2)
         self.assertEqual(data['date'], '2023-06-01')
+        self.assertIn('url', data)
 
         # Check that transactions don't include 'event' field in nested format
         for transaction in data['transactions']:
