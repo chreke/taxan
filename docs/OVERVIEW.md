@@ -7,6 +7,7 @@
 ### Technology Stack
 - **Backend**: Python 3 with Django 5.2.6
 - **API Framework**: Django REST Framework 3.16.1
+- **API Documentation**: drf-spectacular for OpenAPI 3.0 schema generation
 - **Database**: SQLite (development)
 - **Testing**: pytest with pytest-django
 - **Environment**: virtualenv for dependency isolation
@@ -69,6 +70,8 @@ RESTful API endpoints:
 - `/events/` - Event CRUD operations
 - `/financial-years/` - Financial year management
 - `/attachments/` - File upload and attachment management
+- `/api/schema/` - OpenAPI 3.0 schema (JSON format)
+- `/api/docs/` - Interactive Swagger UI documentation
 - `/admin/` - Django admin interface
 - `/api-auth/` - DRF authentication
 - `/media/` - Uploaded file serving (development only)
@@ -94,7 +97,7 @@ Tests verify:
 
 Standard Django configuration with:
 - SQLite database for development
-- Django REST Framework integration
+- Django REST Framework integration with drf-spectacular for OpenAPI schema generation
 - Single app (`tx`) registration
 - Development-friendly settings (DEBUG=True)
 - Media file handling (MEDIA_ROOT, MEDIA_URL) for attachments
