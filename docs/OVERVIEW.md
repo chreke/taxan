@@ -74,17 +74,18 @@ RESTful API endpoints:
 
 ### 4. Testing (`tx/tests/`)
 
-Comprehensive test coverage:
-- **Serializer Tests**: Validation logic, data transformation, business rules
-- **ViewSet Tests**: API endpoint functionality, HTTP responses
-- **Attachment Tests**: File upload functionality, UUID generation, event association
-- **Model Tests**: Implicit through serializer testing
+Comprehensive test coverage with dedicated test modules:
+
+**`test_serializers.py`**: Serializer validation logic, data transformation, and business rules
+**`test_views.py`**: API endpoint functionality and HTTP responses
+**`test_attachments.py`**: File upload functionality, UUID generation, and event integration
 
 Tests verify:
 - Double-entry bookkeeping validation
 - Date validation for financial years
 - Immutability of financial records
-- Proper error handling for invalid data
+- File upload functionality with UUID-based naming
+- Proper error handling and business rule enforcement
 
 ### 5. Configuration (`taxan/settings.py`)
 
