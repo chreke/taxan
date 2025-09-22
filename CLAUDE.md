@@ -14,8 +14,15 @@ supports bookkeeping and accounting.
 - Please run the following command when you have completed a task:
   `afplay /System/Library/Sounds/Glass.aiff`
 
+## Project documentation
+
+See @docs/OVERVIEW.md for an overiew of the project
 
 ## Style Guide
+
+### REST API Urls
+
+Each serializer should have an `HyperlinkedIdentityField` field named `url`.
 
 ### Model Foreign Keys
 
