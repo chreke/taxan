@@ -10,6 +10,7 @@ supports bookkeeping and accounting.
 - Please commit your changes when you are done.
 - Note that this app uses a virtual environment located in `venv`; please make
   sure it is sourced it before attempting to run any Python or Django commands.
+- After making code changes, always run the tests and ensure that they pass.
 - Please run the following command when you have completed a task:
   `afplay /System/Library/Sounds/Glass.aiff`
 
