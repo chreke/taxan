@@ -17,12 +17,15 @@ Please consult `docs/MODELS.md` to understand the model structure
 
 Also, make sure to set up MEDIA_ROOT and MEDIA_URL settings.
 
-Make sure the attachmetns get uploaded to an a"attachments" subdirectory
+Make sure the attachmetns get uploaded to an "attachments" subdirectory
 
 The serializers should also be updated:
 
 - Add a *read-only* field to the Event serializer for its attachments
 - Add a new serializer for uploading files; add it to the DRF browser
+
+Update tests as appropriate and make sure they pass. Add some basic tests
+for uploading attachments.
 
 When you are done, please update `docs/MODELS.md` and document the
 new model. Also, update `docs/OVERVIEW.md` with the high-level
