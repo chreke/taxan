@@ -1,2 +1,15 @@
+[project]
+name = "taxan"
+version = "0.1.0"
+description = "Accounting service for Swedish small businesses"
+requires-python = ">=3.10"
+dependencies = [
+    "Django==5.2.6",
+    "djangorestframework==3.16.1",
+    "drf-spectacular",
+    "pytest==8.4.2",
+    "pytest-django==4.11.1",
+]
+
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "taxan.settings"

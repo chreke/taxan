@@ -10,7 +10,7 @@
 - **API Documentation**: drf-spectacular for OpenAPI 3.0 schema generation
 - **Database**: SQLite (development)
 - **Testing**: pytest with pytest-django
-- **Environment**: virtualenv for dependency isolation
+- **Package Management**: uv for fast dependency resolution and installation
 
 ## Core Components
 

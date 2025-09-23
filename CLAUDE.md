@@ -8,15 +8,17 @@ supports bookkeeping and accounting.
 ## Development workflow
 
 - Please commit your changes when you are done.
-- Note that this app uses a virtual environment located in `venv`; please make
-  sure it is sourced it before attempting to run any Python or Django commands.
+- This app uses uv for dependency management. Use `uv sync` to install dependencies.
 - After making code changes, always run the tests and ensure that they pass.
+- When adding dependencies, use `uv add <package>` which automatically updates pyproject.toml and uv.lock
 - Please run the following command when you have completed a task:
   `afplay /System/Library/Sounds/Glass.aiff`
 
 ## Project documentation
 
-See @docs/OVERVIEW.md for an overiew of the project
+See @docs/OVERVIEW.md for an overiew of the project. This file is written for
+the benefit of you, Claude, to help you understand the project better. Please
+keep this in mind if you update the file.
 
 ## Style Guide
 
