@@ -4,20 +4,18 @@
 
 ## Development Setup
 
-```bash
-# Create and activate virtual environment
-python3 -m venv venv
-source venv/bin/activate
+This project uses [uv](https://docs.astral.sh/uv/) for fast dependency management.
 
+```bash
 # Install dependencies
-pip install -r requirements.txt
+uv sync
 
 # Run migrations
-python manage.py migrate
+uv run python manage.py migrate
 
 # Create superuser
-python manage.py createsuperuser
+uv run python manage.py createsuperuser
 
 # Start development server
-python manage.py runserver
+uv run python manage.py runserver
 ```
