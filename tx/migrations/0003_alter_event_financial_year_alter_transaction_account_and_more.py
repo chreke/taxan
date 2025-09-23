@@ -7,23 +7,37 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tx', '0002_financialyear_event_financial_year'),
+        ("tx", "0002_financialyear_event_financial_year"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='event',
-            name='financial_year',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='events', to='tx.financialyear'),
+            model_name="event",
+            name="financial_year",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="events",
+                to="tx.financialyear",
+            ),
         ),
         migrations.AlterField(
-            model_name='transaction',
-            name='account',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='transactions', to='tx.account'),
+            model_name="transaction",
+            name="account",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="transactions",
+                to="tx.account",
+            ),
         ),
         migrations.AlterField(
-            model_name='transaction',
-            name='event',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='transactions', to='tx.event'),
+            model_name="transaction",
+            name="event",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="transactions",
+                to="tx.event",
+            ),
         ),
     ]

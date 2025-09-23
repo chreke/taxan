@@ -9,26 +9,29 @@ from .serializers import EventSerializer, FinancialYearSerializer, AttachmentSer
     list=extend_schema(
         summary="List accounting events",
         description="Retrieve a list of all accounting events (journal entries) with their transactions and attachments.",
-        tags=["events"]
+        tags=["events"],
     ),
     create=extend_schema(
         summary="Create a new accounting event",
         description="Create a new accounting event with nested transactions. The total debits must equal total credits, and at least one transaction is required.",
-        tags=["events"]
+        tags=["events"],
     ),
     retrieve=extend_schema(
         summary="Retrieve an accounting event",
         description="Get details of a specific accounting event including all its transactions and attachments.",
-        tags=["events"]
-    )
+        tags=["events"],
+    ),
 )
-class EventViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, viewsets.GenericViewSet):
+class EventViewSet(
+    CreateModelMixin, ListModelMixin, RetrieveModelMixin, viewsets.GenericViewSet
+):
     """
     ViewSet for managing accounting events (journal entries).
 
     Events are the core of double-entry bookkeeping, containing one or more
     transactions that must balance (total debits = total credits).
     """
+
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
@@ -37,26 +40,29 @@ class EventViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, viewset
     list=extend_schema(
         summary="List financial years",
         description="Retrieve a list of all defined financial years for the business.",
-        tags=["financial-years"]
+        tags=["financial-years"],
     ),
     create=extend_schema(
         summary="Create a new financial year",
         description="Create a new financial year period. The start date must be before the end date.",
-        tags=["financial-years"]
+        tags=["financial-years"],
     ),
     retrieve=extend_schema(
         summary="Retrieve a financial year",
         description="Get details of a specific financial year including its date range.",
-        tags=["financial-years"]
-    )
+        tags=["financial-years"],
+    ),
 )
-class FinancialYearViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, viewsets.GenericViewSet):
+class FinancialYearViewSet(
+    CreateModelMixin, ListModelMixin, RetrieveModelMixin, viewsets.GenericViewSet
+):
     """
     ViewSet for managing financial years.
 
     Financial years define the accounting periods for organizing
     business transactions and generating financial reports.
     """
+
     queryset = FinancialYear.objects.all()
     serializer_class = FinancialYearSerializer
 
@@ -65,33 +71,33 @@ class FinancialYearViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
     list=extend_schema(
         summary="List file attachments",
         description="Retrieve a list of all file attachments associated with accounting events.",
-        tags=["attachments"]
+        tags=["attachments"],
     ),
     create=extend_schema(
         summary="Upload a new file attachment",
         description="Upload a file attachment and associate it with an accounting event. Files are automatically renamed with UUIDs.",
-        tags=["attachments"]
+        tags=["attachments"],
     ),
     retrieve=extend_schema(
         summary="Retrieve a file attachment",
         description="Get details of a specific file attachment including its download URL and associated event.",
-        tags=["attachments"]
+        tags=["attachments"],
     ),
     update=extend_schema(
         summary="Update a file attachment",
         description="Update the details of an existing file attachment, such as changing the associated event.",
-        tags=["attachments"]
+        tags=["attachments"],
     ),
     partial_update=extend_schema(
         summary="Partially update a file attachment",
         description="Partially update an existing file attachment, such as changing the associated event.",
-        tags=["attachments"]
+        tags=["attachments"],
     ),
     destroy=extend_schema(
         summary="Delete a file attachment",
         description="Delete a file attachment. This will remove the file from storage and the database record.",
-        tags=["attachments"]
-    )
+        tags=["attachments"],
+    ),
 )
 class AttachmentViewSet(viewsets.ModelViewSet):
     """
@@ -100,5 +106,6 @@ class AttachmentViewSet(viewsets.ModelViewSet):
     Attachments allow users to associate files (receipts, invoices, etc.)
     with accounting events for documentation and audit purposes.
     """
+
     queryset = Attachment.objects.all()
     serializer_class = AttachmentSerializer
