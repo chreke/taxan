@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from .models import Event, FinancialYear, Attachment
 from .serializers import EventSerializer, FinancialYearSerializer, AttachmentSerializer
@@ -19,24 +20,9 @@ from .serializers import EventSerializer, FinancialYearSerializer, AttachmentSer
         summary="Retrieve an accounting event",
         description="Get details of a specific accounting event including all its transactions and attachments.",
         tags=["events"]
-    ),
-    update=extend_schema(
-        summary="Update an accounting event",
-        description="Events are immutable after creation. This operation is not supported to maintain accounting integrity.",
-        tags=["events"]
-    ),
-    partial_update=extend_schema(
-        summary="Partially update an accounting event",
-        description="Events are immutable after creation. This operation is not supported to maintain accounting integrity.",
-        tags=["events"]
-    ),
-    destroy=extend_schema(
-        summary="Delete an accounting event",
-        description="Delete an accounting event and all its associated transactions. Use with caution as this affects accounting records.",
-        tags=["events"]
     )
 )
-class EventViewSet(viewsets.ModelViewSet):
+class EventViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, viewsets.GenericViewSet):
     """
     ViewSet for managing accounting events (journal entries).
 
@@ -62,24 +48,9 @@ class EventViewSet(viewsets.ModelViewSet):
         summary="Retrieve a financial year",
         description="Get details of a specific financial year including its date range.",
         tags=["financial-years"]
-    ),
-    update=extend_schema(
-        summary="Update a financial year",
-        description="Update the details of an existing financial year. Start date must be before end date.",
-        tags=["financial-years"]
-    ),
-    partial_update=extend_schema(
-        summary="Partially update a financial year",
-        description="Partially update an existing financial year. Start date must be before end date.",
-        tags=["financial-years"]
-    ),
-    destroy=extend_schema(
-        summary="Delete a financial year",
-        description="Delete a financial year. Note that this may affect events associated with this financial year.",
-        tags=["financial-years"]
     )
 )
-class FinancialYearViewSet(viewsets.ModelViewSet):
+class FinancialYearViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, viewsets.GenericViewSet):
     """
     ViewSet for managing financial years.
 
