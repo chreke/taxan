@@ -22,6 +22,10 @@ keep this in mind if you update the file.
 
 ## Style Guide
 
+### Quotation marks
+
+Use `"` for strings and `"""` for multiline strings.
+
 ### REST API Urls
 
 Each serializer should have an `HyperlinkedIdentityField` field named `url`.
