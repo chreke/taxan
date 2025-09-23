@@ -136,7 +136,32 @@ REST_FRAMEWORK = {
 # drf-spectacular settings
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Taxan API',
-    'DESCRIPTION': 'API for Taxan - an accounting service for Swedish small businesses',
+    'DESCRIPTION': '''
+    REST API for Taxan - an accounting service for Swedish small businesses implementing double-entry bookkeeping.
+
+    This API allows you to:
+    - Manage financial years for business accounting periods
+    - Create events (journal entries) with balanced debit/credit transactions
+    - Upload and manage file attachments for events
+    - Maintain chart of accounts and transaction records
+    ''',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+    'CONTACT': {
+        'name': 'Taxan API Support',
+    },
+    'TAGS': [
+        {
+            'name': 'events',
+            'description': 'Journal entries containing balanced debit/credit transactions'
+        },
+        {
+            'name': 'financial-years',
+            'description': 'Business fiscal periods for organizing accounting data'
+        },
+        {
+            'name': 'attachments',
+            'description': 'File attachments associated with accounting events'
+        },
+    ],
 }
