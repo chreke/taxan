@@ -38,3 +38,11 @@ class Transaction(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='transactions')
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='transactions')
 ```
+
+### Code Formatting
+
+Use `black` for Python code formatting. To format the codebase, run:
+
+```bash
+uv run black taxan tx
+```
