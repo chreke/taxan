@@ -14,6 +14,7 @@ supports bookkeeping and accounting.
   pyproject.toml and uv.lock
 - If you make a change to a Django model, always run `manage.py makemigrations`, then
   `manage.py migrate` to make sure it works
+- All code should be formatted with `black` prior to being checked in.
 - Please run the following command when you have completed a task:
   `afplay /System/Library/Sounds/Glass.aiff`
 

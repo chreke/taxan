@@ -254,3 +254,59 @@ def test_event_update_not_supported(financial_year):
     serializer = EventSerializer(event)
     with pytest.raises(AttributeError):
         serializer.update(event, {"description": "Updated description"})
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "event_date,description",
+    [
+        ("2022-12-31", "Event before fiscal year"),
+        ("2024-01-01", "Event after fiscal year"),
+        ("2022-06-01", "Event way before fiscal year"),
+        ("2024-06-01", "Event way after fiscal year"),
+    ],
+)
+def test_event_date_outside_financial_year(
+    cash_account, revenue_account, financial_year, event_date, description
+):
+    """Test that event date must fall within the financial year period"""
+    data = {
+        "date": event_date,
+        "description": description,
+        "financial_year": financial_year.id,
+        "transactions": [
+            {"amount": "100.00", "account": cash_account.id, "direction": "debit"},
+            {"amount": "100.00", "account": revenue_account.id, "direction": "credit"},
+        ],
+    }
+    serializer = EventSerializer(data=data)
+    assert not serializer.is_valid()
+    assert "non_field_errors" in serializer.errors
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "event_date,description",
+    [
+        ("2023-01-01", "Event on first day of fiscal year"),
+        ("2023-12-31", "Event on last day of fiscal year"),
+    ],
+)
+def test_event_date_on_financial_year_boundaries(
+    cash_account, revenue_account, financial_year, event_date, description
+):
+    """Test that events can be created on the first and last day of the financial year"""
+    data = {
+        "date": event_date,
+        "description": description,
+        "financial_year": financial_year.id,
+        "transactions": [
+            {"amount": "100.00", "account": cash_account.id, "direction": "debit"},
+            {"amount": "100.00", "account": revenue_account.id, "direction": "credit"},
+        ],
+    }
+    serializer = EventSerializer(data=data)
+    assert serializer.is_valid()
+    event = serializer.save()
+    assert event.date.isoformat() == event_date
+    assert event.description == description

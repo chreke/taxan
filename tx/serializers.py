@@ -109,6 +109,20 @@ class EventSerializer(serializers.ModelSerializer):
                 f"Total debits ({total_debits}) must equal total credits ({total_credits})."
             )
 
+        # Validate that event date falls within financial year period
+        financial_year = data.get("financial_year")
+        event_date = data.get("date")
+
+        if financial_year and event_date:
+            if event_date < financial_year.start_date:
+                raise serializers.ValidationError(
+                    f"Event date ({event_date}) cannot be before financial year start date ({financial_year.start_date})."
+                )
+            if event_date > financial_year.end_date:
+                raise serializers.ValidationError(
+                    f"Event date ({event_date}) cannot be after financial year end date ({financial_year.end_date})."
+                )
+
         return data
 
     def create(self, validated_data):
