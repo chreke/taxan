@@ -10,7 +10,10 @@ supports bookkeeping and accounting.
 - Please commit your changes when you are done.
 - This app uses uv for dependency management. Use `uv sync` to install dependencies.
 - After making code changes, always run the tests and ensure that they pass.
-- When adding dependencies, use `uv add <package>` which automatically updates pyproject.toml and uv.lock
+- When adding dependencies, use `uv add <package>` which automatically updates
+  pyproject.toml and uv.lock
+- If you make a change to a Django model, always run `manage.py makemigrations`, then
+  `manage.py migrate` to make sure it works
 - Please run the following command when you have completed a task:
   `afplay /System/Library/Sounds/Glass.aiff`
 
