@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+import textwrap
 
 from pathlib import Path
 
@@ -136,15 +137,16 @@ REST_FRAMEWORK = {
 # drf-spectacular settings
 SPECTACULAR_SETTINGS = {
     "TITLE": "Taxan API",
-    "DESCRIPTION": """
+    "DESCRIPTION": textwrap.dedent("""
     REST API for Taxan - an accounting service for Swedish small businesses implementing double-entry bookkeeping.
 
     This API allows you to:
+
     - Manage financial years for business accounting periods
     - Create events (journal entries) with balanced debit/credit transactions
     - Upload and manage file attachments for events
     - Maintain chart of accounts and transaction records
-    """,
+    """),
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "CONTACT": {
