@@ -29,8 +29,6 @@ class Event(models.Model):
     financial_year = models.ForeignKey(
         FinancialYear,
         on_delete=models.CASCADE,
-        null=True,
-        blank=True,
         related_name="events",
         help_text="Optional financial year this event belongs to",
     )
