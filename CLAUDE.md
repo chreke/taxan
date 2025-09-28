@@ -15,6 +15,8 @@ supports bookkeeping and accounting.
 - If you make a change to a Django model, always run `manage.py makemigrations`, then
   `manage.py migrate` to make sure it works
 - All code should be formatted with `black` prior to being checked in.
+- When writing tests, prefer using Pytest's `parametrize` function to writing
+  tests that differ only in test input.
 - Please run the following command when you have completed a task:
   `afplay /System/Library/Sounds/Glass.aiff`
 
