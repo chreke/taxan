@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, DestroyModelMixin
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from .models import Event, FinancialYear, Attachment
 from .serializers import EventSerializer, FinancialYearSerializer, AttachmentSerializer
@@ -68,11 +68,6 @@ class FinancialYearViewSet(
 
 
 @extend_schema_view(
-    list=extend_schema(
-        summary="List file attachments",
-        description="Retrieve a list of all file attachments associated with accounting events.",
-        tags=["attachments"],
-    ),
     create=extend_schema(
         summary="Upload a new file attachment",
         description="Upload a file attachment and associate it with an accounting event. Files are automatically renamed with UUIDs.",
@@ -83,23 +78,15 @@ class FinancialYearViewSet(
         description="Get details of a specific file attachment including its download URL and associated event.",
         tags=["attachments"],
     ),
-    update=extend_schema(
-        summary="Update a file attachment",
-        description="Update the details of an existing file attachment, such as changing the associated event.",
-        tags=["attachments"],
-    ),
-    partial_update=extend_schema(
-        summary="Partially update a file attachment",
-        description="Partially update an existing file attachment, such as changing the associated event.",
-        tags=["attachments"],
-    ),
     destroy=extend_schema(
         summary="Delete a file attachment",
         description="Delete a file attachment. This will remove the file from storage and the database record.",
         tags=["attachments"],
     ),
 )
-class AttachmentViewSet(viewsets.ModelViewSet):
+class AttachmentViewSet(
+    CreateModelMixin, ListModelMixin, RetrieveModelMixin, DestroyModelMixin, viewsets.GenericViewSet
+):
     """
     ViewSet for managing file attachments.
 
